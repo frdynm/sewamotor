@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import 'package:sewamotor/warna.dart';
 import '../controllers/register_controller.dart';
 
 class RegisterView extends GetView<RegisterController> {
+  final RegisterC = Get.put(RegisterController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +70,7 @@ class RegisterView extends GetView<RegisterController> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: RegisterC.emailC,
                     decoration: InputDecoration(
                         // focusedborder == ketika di klik nanti mau di apain si outline nya
                         focusedBorder: OutlineInputBorder(
@@ -83,6 +86,7 @@ class RegisterView extends GetView<RegisterController> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: RegisterC.NamaLengkapC,
                     decoration: InputDecoration(
                         // focusedborder == ketika di klik nanti mau di apain si outline nya
                         focusedBorder: OutlineInputBorder(
@@ -99,6 +103,8 @@ class RegisterView extends GetView<RegisterController> {
                   ),
 
                   TextFormField(
+                    keyboardType: TextInputType.phone,
+                    controller: RegisterC.NoteleponeC,
                     decoration: InputDecoration(
                         // focusedborder == ketika di klik nanti mau di apain si outline nya
                         focusedBorder: OutlineInputBorder(
@@ -114,33 +120,51 @@ class RegisterView extends GetView<RegisterController> {
                     height: 10,
                   ),
 
-                  TextFormField(
-                    decoration: InputDecoration(
-                        // focusedborder == ketika di klik nanti mau di apain si outline nya
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color(warna.mainColor), width: 1.0)),
-                        labelStyle: TextStyle(color: Colors.black),
-                        hintText: "Kota",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                  ),
+                  DropdownSearch<String>(
+                      mode: Mode.MENU,
+                      items: [
+                        "Kota Bandung",
+                        "Kota Cimahi",
+                        "Kabupaten Bandung Barat",
+                        "Kabupaten Bandung Selatan"
+                            "Kabupaten Cimahi"
+                      ],
+                      label: "Kota",
+                      popupItemDisabled: (String s) => s.startsWith('I'),
+                      onChanged: (print) => RegisterC.KotaC),
+                  // TextFormField(
+                  //   controller: RegisterC.KotaC,
+                  //   decoration: InputDecoration(
+                  //       // focusedborder == ketika di klik nanti mau di apain si outline nya
+                  //       focusedBorder: OutlineInputBorder(
+                  //           borderSide: BorderSide(
+                  //               color: Color(warna.mainColor), width: 1.0)),
+                  //       labelStyle: TextStyle(color: Colors.black),
+                  //       hintText: "Kota",
+                  //       border: OutlineInputBorder(
+                  //           borderRadius:
+                  //               BorderRadius.all(Radius.circular(10)))),
+                  // ),
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        // focusedborder == ketika di klik nanti mau di apain si outline nya
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color(warna.mainColor), width: 1.0)),
-                        labelStyle: TextStyle(color: Colors.black),
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                  ),
+                  Obx(() => TextFormField(
+                        controller: RegisterC.PasswordC,
+                        obscureText: RegisterC.isHiden.value,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: () => RegisterC.isHiden.toggle(),
+                                icon: Icon(Icons.remove_red_eye)),
+                            // focusedborder == ketika di klik nanti mau di apain si outline nya
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(warna.mainColor), width: 1.0)),
+                            labelStyle: TextStyle(color: Colors.black),
+                            hintText: "Password",
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
+                      )),
                   SizedBox(
                     height: 10,
                   ),

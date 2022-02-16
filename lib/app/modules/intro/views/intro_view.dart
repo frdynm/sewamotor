@@ -61,7 +61,7 @@ class IntroView extends GetView<IntroController> {
               InkWell(
                 onTap: () {
                   print("Mulai sekarang di klik");
-                  Get.to(LoginView());
+                  Get.off(LoginView());
                 },
                 child: Container(
                   width: Get.width * 0.5,

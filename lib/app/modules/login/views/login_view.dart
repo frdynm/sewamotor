@@ -7,6 +7,7 @@ import 'package:sewamotor/warna.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  final LoginC = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +68,7 @@ class LoginView extends GetView<LoginController> {
                   ),
                   SizedBox(height: 10),
                   TextFormField(
+                    controller: LoginC.emailC,
                     decoration: InputDecoration(
                         // focusedborder == ketika di klik nanti mau di apain si outline nya
                         focusedBorder: OutlineInputBorder(
@@ -81,18 +83,23 @@ class LoginView extends GetView<LoginController> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        // focusedborder == ketika di klik nanti mau di apain si outline nya
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Color(warna.mainColor), width: 1.0)),
-                        labelStyle: TextStyle(color: Colors.black),
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10)))),
-                  ),
+                  Obx(() => TextFormField(
+                        obscureText: LoginC.isHiden.value,
+                        controller: LoginC.PasswordC,
+                        decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: () => LoginC.isHiden.toggle(),
+                                icon: Icon(Icons.remove_red_eye)),
+                            // focusedborder == ketika di klik nanti mau di apain si outline nya
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(warna.mainColor), width: 1.0)),
+                            labelStyle: TextStyle(color: Colors.black),
+                            hintText: "Password",
+                            border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)))),
+                      )),
                   SizedBox(
                     height: 10,
                   ),
